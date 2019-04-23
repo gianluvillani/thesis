@@ -1,0 +1,53 @@
+In this section we will focus on the description of the Bayesian Confidence Propagation Neural Networks (BCPNN) model and on its properties \cite{sandberg2002bayesian}. We will see how its characteristic equations and learning rule are heuristically derived from the Bayes rule and the Naive Bayesian Classifier. We will finally justify its use as a \textit{Palimpsest Memory}. 
+
+\subsection{Naive Bayesian Classifier BCPNN}
+\textit{A probabilistic perspective on learning and recall in neural networks often seem natural. In this context the learning experience is regarded as collecting statistics and recall as the statistical inference process based on the world model acquired through experience}. [This is italic paragraph copied from Anders Thesis, here just as some nice expression that will be removed later]
+
+We want to compute the probabilities $\pi_{j}=P(y_j|X)$ of some $y_j$ given  a set of attributes $X= \{x_1,...,x_n\}$. We want to perform this calculation even when only a subset $K \subseteq X$ is known. Assume that these observations are both independent \eqref{eq:x_independent} and conditionally independent with respect to $y_j$\eqref{eq:x_cond_independent}. 
+
+\begin{equation}
+    P(x_1,..., x_n) = \prod\limits_{i \in K} P(x_i)
+    \label{eq:x_independent}
+\end{equation}
+
+\begin{equation}
+    P(x_1,..., x_n|y_i) = \prod\limits_{i \in K} P(x_i|y_j)
+    \label{eq:x_cond_independent}
+\end{equation}
+
+\begin{equation}
+    P(y_j|X)P(X) = P(X|y_j)P(y_j)
+    \label{eq:bayes_rule}
+\end{equation}
+
+Using Bayes' rule \eqref{eq:bayes_rule} and given the independence and conditional independence assumptions, we can compute the \textit{posterior} probability of the occurrence of the attribute $y_j$:
+
+\begin{equation}
+\begin{aligned}
+    \pi_{j} & = P(y_j|X) = \frac{P(y_j)}{P(X)}P(X|y_j) \\
+    & = P(y_j)\prod\limits_{i \in K}\frac{P(x_i|y_j)}{P(x_i)} \\
+    & = P(y_j)\prod\limits_{i \in K}\frac{P(x_i,y_j)}{P(y_j)P(x_i)}
+    \label{eq:pi_cond_mult}
+\end{aligned}
+\end{equation}
+
+Taking the logarithm of both sides of the equation \eqref{eq:pi_cond_mult} we can write:
+
+\begin{equation}
+\begin{aligned}
+    log\ \pi_{j} & = log\ P(y_j) + \sum\limits_{i \in K}log\left[\frac{P(x_i,y_j)}{P(y_j)P(x_i)}\right] \\
+    & = log\ P(y_j) + \sum\limits_{i=1}^n log\left[\frac{P(x_i,y_j)}{P(y_j)P(x_i)}\right]o_ {j},
+    & o_j = \begin{cases}
+    0, &  x_j \in K\\
+    1, &  x_j \notin K
+    \end{cases}
+\end{aligned}
+    \label{eq:feedforwardBCPNN}
+\end{equation}
+
+It is easy to notice that the equation \eqref{eq:feedforwardBCPNN} can be implemented with a simple single-layer feed forward network with $n$ input nodes and weights 
+$w_{ij} = log\left[\frac{P(x_i,y_j)}{P(y_j)P(x_i)}\right]$ and biases $\beta_j = log\ P(y_j)$. 
+
+We can rewrite \eqref{eq:feedforwardBCPNN} using 
+\subsection{Modular Network Topology}
+  The BCPNN model described in the previous section can be easily extended to  encode interval coded attributes, i.e. each attribute $i$ can take a discrete number of values $M_i$. 

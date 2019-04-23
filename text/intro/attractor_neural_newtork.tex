@@ -1,0 +1,42 @@
+
+Artificial Neural Networks (ANN) models often bridge the gap between the cognitive perspective and the cortical perspective since they offer models for networks at scales that are hard or impossible to study experimentally. In fact ANNs, together with other neurocomputational models, are a powerful tool to test our hypothesis on the fundamental principles of brain 'functioning'(choose a better word) in a controlled environment. 
+
+The model adopted in this thesis is an auto-associative Attractor Neural Network model, i.e. a system that is capable of storing information in the form of attractor states. Therefore, in  this section we will briefly introduce the main concept of Attractor Neural Networks and explain why our model belongs to this family of recurrent neural networks.
+
+\subsection{Hopfield models}
+\paragraph{Discrete time binary model}
+One of the most simple and studied ANN for auto-associative memory is the Hopfield network \cite{hopfield1982neural}. It can be regarded as a first formalisation of Hebb's original ideas \cite{Hebb} on how synaptic connections between neurons could produce the emergence of cell assemblies. Hebb suggested, with his famous first postulate, that neurons that tend to be activated simultaneously, strengthen their mutual coupling (Hebb's rule). 
+
+In Hopfield model units are binary, taking only values in the set $\{-1, +1\}$ and the system evolution is discrete in time. Since the network's units are binary, the network is only able to store binary coded strings. In a network with $N$ units, the typical stored pattern will be in the form of a vector $v = [s_1, \dots, s_N],\ s_i \in \{-1, +1\}$. 
+
+The network is symmetric and densely connected. To store information in the network Hopfield proposed a simple mathematical formalization of Hebb's rule: for each pattern $p$ that we present to the network, the connection betweeen units $i$ and $j$ is increased if the activations $x_i$ and $x_j$ are the same and decreased otherwise. Denote by $P$ the list of patterns that are presented to the network in order to be stored, the learning rule follows:
+
+\begin{equation}
+    w_{ij}=
+    \begin{cases} 
+    \frac{1}{N} \times \sum\limits_{p \in P} x_i^p x_j^p, i \neq j \\
+    0, i=j
+    \end{cases}
+    \label{eq:hebbs_classic}
+\end{equation}
+
+The evolution of the units output is based on a simple threshold rule: for each unit $i$ the new activation at time $t+1$ is computed according to a weighted sum of its inputs at time $t$:
+
+\begin{equation}
+    s_i(t+1)= sign(\sum_j w_{ij}s_j)
+    \label{eq:act_hop}
+\end{equation}
+
+It can simply proven that for the system described above (\cite{marsland2011machine} chapter x for example) the symmetric matrix $W =\left[w\right]_{ij} $ defines a Lyapunov function $V(s) = -\frac{1}{2} s^T W s$ according to which stability is proven).
+
+Connection of the Hopfield model the Ising model maybe could help us to later relate to the Potts model since the latter is a generalization of the former.
+
+\paragraph{Continuous time graded system}
+We will now consider a model based on continuous variables and responses that retains all the original properties described in the previous paragraph. This model was introduced by Hopfield himself in 1984 \cite{hopfield1984continuous}
+
+\subsection{Potts models}
+Generalization of the Hopfield model in the previous section. Should decide here what to include exactly.
+\subsection{Palimpsest memories}
+Two legitimate questions when working with memory models are whether their storage capacity is finite and what happens when one presents to the memory too many patterns. While the first question has a trivial answer, given the finite dimensionality of the network and activations, the answer to the second one depends on the learning rule. In particular as more and more patterns are presented, the network's ability to store the patterns will start to decline. For simple learning rules like the classic hebbian rule in \eqref{eq:hebbs_classic}, there is no distinction between \textit{old} and \textit{new} patterns, therefore once the maximum storing capacity is reached, the memories start to interfere with each other until, in abrupt manner, almost all patterns are disrupt nearly at the same time. This problem, well known as catastrophic forgetting, appears relevant since it is not usually observed in biological systems. To cope with this issue alternative learning rules have been proposed (incremental learning for example). \textbf{Here to add a couple of lines about how is this related to our system. Also add some citations}
+
+\subsection{Free Recall dynamics}

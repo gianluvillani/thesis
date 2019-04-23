@@ -1,0 +1,99 @@
+In this chapter we introduce the dynamics of the model adopted in this thesis. In \cref{bcpnn_complete} we introduce the original model proposed in \cite{LansnerFRC} and briefly explain the biological interpretation of the system's states, while in \cref{rBCPNN} a simplified model called reduced BCPNN is described.
+
+\section{BCPNN with adaptation}
+\label{bcpnn_complete}
+In this section we analyse the model proposed in \cite{LansnerFRC}. The network configuration used is made by $H$ hypercolumns, composed by $M$ elementary units, meant to represent a \textit{minicolumn} in the Prefrontal Cortex (PFC).
+
+This particular modular structure, as argued in \cite[Chapter~3.3.2]{sandberg2003bayesian}, can be seen as a Discrete Valued Attribute Network. In particular a certain attribute $i$ is encoded into $M_i$ intervals, each corresponding to a particular minicolumn $m_{ij}$ in the hypercolumn $H_i$. The overall system strongly suggest a Potts type neural network architecture (refer to section about Hopfield and Potts model for further details).
+
+\iffalse
+\begin{figure}
+\centering
+  \includegraphics[width=8cm,height=5cm]{myPictureName.png}%
+  \caption{High level organization of the Discrete Valued Attribute Network BCPNN}
+\end{figure}
+\fi
+The equations \eqref{eq:sij}, \eqref{eq:aij}, \eqref{eq:oij} describe, respectively the support and adaptation variables dynamics for a single minicolumn while the equations \eqref{eq:zij}, \eqref{eq:pij} respectively describe the dynamics of the pre- and post- synaptic traces and the estimated action probabilities. 
+
+The\textbf{ support variable} $s_{ij}$ represents the level of activation of the minicolumn $m_{ij}$ (minicolumn j in the hypercolumn i). As shown in in \eqref{eq:sij}, minicolumns are recurrently connected to themselves and to all the other units in the network. Although, this \textbf{dense connectivity} is not reasonable on a biological level, it is required to ensure the stability of networks of small dimensions (Why? Not stated in the original paper. Not found yet a good explanation or at least justification)\todo{should I inlude or explore this statement?}\cite{LansnerFRC}. 
+
+The variable $a_{ij}$ models the well known biological mechanism of \textbf{neural adaptation}. In particular, neural cells tend to adapt, i.e. they generally decrease their activity, in reaction to a persistent stimulus. In \cite[Chapter~5]{sandberg2003working} this mechanism is claimed to be particularly useful for switching from one stored pattern to another. Adaptation reduces the basin of attraction (stability) of the patterns, therefore it is easier to switch from one attractor to another thanks to noise. Nevertheless, the role of adaptation in our model will be further discussed in Chapter 4.
+
+At the output level, units within the same hypercolumn interact via \textbf{lateral inhibition}, such that each hypercolumn acts as a soft winner-take-all microcircuit. This means that what determines the output of each minicolumn is the relative strength of its activation with respect to the activations of the other units in the same hypercolumn. This interaction is modelled with a \textbf{soft-max} distribution such that each minicolumn $m_{ij}$ has graded output $o_{ij}\in[0,1]$. 
+\begin{equation}
+    \frac{ds_{ij}}{dt} = \frac{g_w(\beta_{ij}+\sum\limits_{k=1}^H\sum\limits_{l=1}^M w_{kl,ij}o_{kl})-a_{ij}+log(I_{ij})+\sigma-s_{ij}}{\tau_m} 
+    \label{eq:sij}
+\end{equation}
+
+\begin{equation}
+    \frac{da_{ij}}{dt} = \frac{g_ao_{ij}-a_ij}{\tau_a} 
+    \label{eq:aij}
+\end{equation}
+
+\begin{equation}
+    o_{ij} = \frac{e^{s_{ij}}}{ \sum\limits_{k=1}^M e^{s_{ik}}}
+    \label{eq:oij}
+\end{equation}
+
+In the following, the presynaptic and postsynaptic minicolumns are respectively labeled as $m_{i^{\prime}j^{\prime}}$ and $m_{ij}$.  
+
+The \textbf{network weights} are updated according to a Bayesian-Hebbian learning rule \cite{LansnerFRC}, a slightly modified version of the one proposed in \cite{SANDBERG2000987}.
+
+The learning rule is Hebbian in the sense that it is based on the occurrence statistics collected during encoding, i.e. the phase during which patterns are presented to the network and the weights adapt accordingly.
+The occurence and co-occurence statistics is mediated via the  pre- $z_{i^{\prime}j^{\prime}}$ and post- $z_{ij}$ synaptic trace variables, that, on a biological basis can be seen as the post and presynaptic events involved in synaptic plasticity. 
+
+The z-traces typically have relatively short time constants and are updated according to the following equations:
+
+\begin{equation}
+\begin{aligned}
+     \frac{dz_{i^{\prime}j^{\prime}}}{dt} & = \frac{o_{i^{\prime}j^{\prime}}-z_{i^{\prime}j^{\prime}}}{\tau_{pre}} \\
+      \frac{dz_{ij}}{dt} & = \frac{o_{ij}-z_{ij}}{\tau_{post}} 
+     \end{aligned}
+    \label{eq:zij}
+\end{equation}
+
+\begin{equation}
+   \begin{aligned}
+   \frac{d \hat p}{dt}  & = k \frac{1-\hat p}{\tau_p} \ \ \ 
+   \frac{d \hat p_{i^{\prime}j^{\prime}}}{dt}  = k \frac{1-\hat p_{i^{\prime}j^{\prime}}}{\tau_p} \\
+   \frac{d \hat p_{ij}}{dt}  &= k \frac{1-\hat p_{ij}}{\tau_p} \ \ \ 
+   \frac{d \hat p_{i^{\prime}j^{\prime}ij}}{dt}  = k \frac{z_{i^{\prime}j^{\prime}}z_{ij} - p_{i^{\prime}j^{\prime}ij}}{\tau_p} 
+   \end{aligned}
+    \label{eq:pij}
+\end{equation}
+The connection weights and biases are updated according to \eqref{eq:wij} as proposed in \cite{sandberg2002bayesian}.
+
+\begin{equation}
+    \begin{aligned}
+    w_{i^{\prime}j^{\prime}ij} &= log_{\epsilon} \frac{\hat{p}_{ \hat{{i^{\prime}j^{\prime}ij}}}}{\hat{p}_{i^{\prime}j^{\prime}}p_{ij}} \\
+    \beta_{ij} &= log_{\epsilon} p_{ij} \\
+    log_{\epsilon}(x) & = log(max(\epsilon,x))
+    \end{aligned}
+    \label{eq:wij}
+\end{equation}
+
+
+\section{rBCPNN}
+\label{rBCPNN}
+A simplified version of the model described in \cref{bcpnn_complete} has been proposed in \cite{johansson2006clustering}. In particular, in this model, named rBCPNN (reduced Bayesyan Confidence Propagation Neural Network) it is assumed that the minicolumn within each hypercolumn interact only via lateral competition at the output level. This means that the only connections considered are the ones between different hypercolumns: $w_{i^{\prime}j^{\prime}ij}=0, \forall i, i^{\prime}: i = i^\prime$ Furthermore, the adaptation effect is neglected. According to this simplification the dynamics of the rBCPNN follows:
+
+\begin{equation}
+    \frac{ds_{ij}}{dt} = \frac{g_w(\beta_{ij}+\sum\limits_{\substack{k=0 \\ k\neq i}}^H\sum\limits_{l=1}^M w_{kl,ij}o_{kl})+log_\epsilon(I_{ij})+\sigma-s_{ij}}{\tau_m} 
+    \label{eq:sij_reduced}
+\end{equation}
+
+\begin{equation}
+    o_{ij} = \frac{e^{s_{ij}}}{ \sum\limits_{k=1}^M e^{s_{ik}}} 
+    \label{eq:oij_reduced}
+\end{equation}
+
+\paragraph{rBCPNN with adaptation}
+
+The model in \eqref{eq:sij_reduced} and \eqref{eq:oij_reduced} can be extended by adding the adaptation module as in \eqref{eq:aij}. As anticipated in and as analytically discussed in ... we will discuss in \cref{analysis} the role of adaptation plays a crucial role in the free recall dynamics.
+
+\section{Learning procedure}
+In this section we recall the learning procedure used in \cite{LansnerFRC}. Although the learning dynamics will not be part of the following analysis, it is interesting to describe how the patterns are actually stored in the networks and how the weight's matrix are shaped during the learning experience. 
+
+
+
+
