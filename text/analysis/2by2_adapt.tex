@@ -1,4 +1,4 @@
-In this section we analyse the effect of the adaptation module on the behaviour of the system. As already discussed in previous works (\cite{sandberg2002bayesian} for example), the role of adaptation is related with the presence of oscillations (sequential reactivation of the different patterns stored into the network). In the adopted model \cite{LansnerFRC} the adaptation acts as a local relaxation of the single minicolumns activity. 
+In this section we analyse the effect of the adaptation module on the behaviour of the system. As already discussed in previous works (\cite{sandberg2002bayesian} for example), the role of adaptation is related with the presence of oscillations (sequential reactivation of the different patterns stored into the network). In the adopted model \cite{LansnerFRC} the adaptation acts as a local relaxation of the single minicolumns activity. The bifurcation analysis that follows it was developed thanks to the useful comments in the Math Stack Exchange discussion with \cite{stack_question}
  
  We will first focus on a system made by two hyper-columns each one made of 2 minicolumns interacting via their outputs.
  
@@ -101,7 +101,7 @@ g(d,t)&d>0, \forall t, d\neq0
 \textbf{Missing part about Lyapunov stability analysis.}
 
 \paragraph{Bifurcation Analysis}
-Once we have proven that the synchronisation manifold (or set) is Globally Asymptotically Stable we can study the dynamics of the system restricted on it. Remember that in $M$ it holds that $d_1=d_2$, therefore we can study the dynamics of the two identical units independently.  
+Previously, we have proven how, under some sufficient assumptions, synchronisation between the two units occurs. Remember that in $M$ it holds that $d_1=d_2$, therefore an interesting approach would be to study the dynamics of the system restricted on it. Before going further, notice that the analysis that follows holds only on the synchronisation manifold $M$. Nevertheless, as the simulations of the complete system in [cite figures] show, the bifurcation analysis that follows will help us to get an insight on the role of the coupling strength $\varepsilon$ in shaping the qualitative behaviour of the system. On $M$ it holds that:
 \begin{equation}
 \begin{aligned}
 \dot d_{1} &= - d_1 - e_1 + \varepsilon f(d_1) \\
@@ -109,9 +109,9 @@ Once we have proven that the synchronisation manifold (or set) is Globally Asymp
 f(d_1) &= \frac{e^{d_1}-1}{e^{d_1}+1}
 \end{aligned}
 \label{eq:2D_sync}
-\end{equation}
+\end{equation}.
 
-We will start the analysis of this two dimensional system by computing the equilibria $(d_1^*,e_1^*)$ and study their properties with the variation of the parameters $\varepsilon, g_a$. The time constant $\tau_a$ is kept fixed, considered as a typical constant of the system. Notice that the system has a global symmetry property: for each solution $(d_1(t), e_1(t))$ it holds that also $(-d_1(t), -e_1(t))$ is a solution. The roots of the equations below \eqref{eq:eq_d_eq}, \eqref{eq:eq_e_eq}  are the fixed points of the dynamics in \eqref{eq:2D_sync}.
+We will start the analysis of this two dimensional system by computing the equilibria $(d_1^*,e_1^*)$ and study their properties with the variation of the parameters $\varepsilon, g_a$. The time constant $\tau_a$ is kept fixed, considered as a typical constant of the system. Notice that the system has a global symmetry property: for each solution $(d_1(t), e_1(t))$ it holds that also $(-d_1(t), -e_1(t))$ is a solution. The roots of the equations below \eqref{eq:eq_d_eq}, \eqref{eq:eq_e_eq}  are the equilibria of the dynamics in \eqref{eq:2D_sync}.
 \begin{equation}
  (\varepsilon - g_a)f(d_1^*) - d_1^* = 0
 \label{eq:eq_d_eq}
@@ -121,7 +121,7 @@ e_1^* = g_a f(d_1^*)
 \label{eq:eq_e_eq}
 \end{equation}
 
-The number of equilibria is uniquely defined by the quantity $\varepsilon-g_a$. In particular, it is easy to show analitically that there is a unique equilibrium for $\varepsilon \leq g_a-2$, while for $\varepsilon > g_a-2$ we have three equilibrium points. Unfortunately, since the equilibria can not be computed analytically we will make use of numerical analysis. In \cref{fig:eq2D_adapt} the three most important cases are plotted.
+The number of equilibria is uniquely defined by the quantity $\varepsilon-g_a$. In particular, it is easy to show that there is a unique equilibrium for $\varepsilon \leq g_a-2$, while for $\varepsilon > g_a-2$ we have three equilibrium points. Unfortunately, since the equilibria can not be computed analytically we will make use of numerical analysis. In \cref{fig:eq2D_adapt} the three most important cases are plotted.
 
  \begin{figure}[!h]
         \center{\includegraphics[width=\textwidth]{text/analysis/fig/2by2adapt/equilibria_2D.png}}
@@ -145,7 +145,7 @@ J_{(0, 0)} = \begin{bmatrix}
 \rho(\lambda) = \lambda^2 + a\lambda +b
 \end{equation}
 
-In order to study the stability of the equilibrium point one can study the sign of the polynomial's coefficient. In fact for a second order polynomial, the number of roots with positive real part can be determined by the number of variations in the polynomial's coefficients \cite{gantmacher2005matrix}.
+In order to study the stability of the equilibrium point one can study the sign of the polynomial's coefficient. In fact for a second order polynomial, the number of roots with positive real part can be determined by the number of variations in the polynomial's coefficients.
 
 \begin{equation}
 \begin{aligned}
@@ -156,23 +156,85 @@ In order to study the stability of the equilibrium point one can study the sign 
 
 When $\varepsilon<2(1+\frac{1}{\tau_a})$ the origin is an asymptotically stable equilibrium point. This condition is not particularly interesting since it means that all the units in the network converge to the same value and their output is identical. In other words, the network is not able to recall any pattern (\cref{fig:eq2D_focus}).
 
-\begin{figure}[!h]
+\begin{figure}[H]
         \center{\includegraphics[width=\textwidth]{text/analysis/fig/2by2adapt/streamline_stable_focus.png}}
         \caption{\label{fig:eq2D_focus} Phase portrait of system in \eqref{eq:2D_sync} for $\varepsilon=1.5,\ g_a=10,\ \tau_a=2$. The nullclines are shown in dark red; the streamline plot is shown in black; several trajectories of the system with different initial conditions are shown in orange.}
 \end{figure}
 
 
-At the critical value $\varepsilon^* = 2 ( 1 + \frac{1}{\tau_a} ) $ a \textbf{supercritical Hopf} bifurcation occurs. In fact, as $\varepsilon$ passes through $\varepsilon^*$, the complex eigenvalues $\lambda_{1,2}$ crosses the imaginary axis. In fact, ${\rm I\!R}(\lambda_{1,2})<0, \varepsilon < \varepsilon^*$ and  ${\rm I\!R}(\lambda_{1,2})>0, \varepsilon > \varepsilon^*$. Therefore, the equilibrium point $(0, 0)$ changes its stability and a unique stable limit cycle bifurcates from it (\cref{fig:eq2D_cycle}).
-\begin{figure}[!h]
+At the critical value $\varepsilon^* = 2 ( 1 + \frac{1}{\tau_a} ) $ a \textbf{supercritical Hopf} bifurcation occurs. In fact, as $\varepsilon$ passes through $\varepsilon^*$, the complex eigenvalues $\lambda_{1,2}$ cross the imaginary axis. In fact, ${\rm I\!R}(\lambda_{1,2})<0, \varepsilon < \varepsilon^*$ and  ${\rm I\!R}(\lambda_{1,2})>0, \varepsilon > \varepsilon^*$. Therefore, the equilibrium point $(0, 0)$ changes its stability and a unique stable limit cycle bifurcates from it (\cref{fig:eq2D_cycle}).
+
+\begin{figure}[H]
         \center{\includegraphics[width=\textwidth]{text/analysis/fig/2by2adapt/streamline_cycle.png}}
         \caption{\label{fig:eq2D_cycle} Phase portrait of system in \eqref{eq:2D_sync} for $\varepsilon=8.5,\ g_a=10,\ \tau_a=2$. The nullclines are shown in dark red; the streamline plot is shown in black; several trajectories of the system with different initial conditions are shown in orange.}
 \end{figure}
 
+But what happens when the coupling factor $\varepsilon$ increases? The next interesting bifurcation phenomenon occurs at the critical value $\varepsilon^o = g_a + 2$ when a \textbf{supercritical pitchfork bifurcation} occurs. In fact, the origin spawns two unstable equilibria and changes from unstable node to saddle. While the parameter $\varepsilon > \varepsilon^o$ keeps increasing the additional two equilibria moves far away from the origin and additional bifurcations occur. In particular, by numerically analising the stability of the Jacbobian matrix at the two off-origin equilibria, a \textbf{subcritical Hopf bifurcation} occurs at the critical value $\varepsilon^{oo} \approx 12.69$. As discussed in the preliminaries section [cite the right section], in a specular way with respect to what happens in the supercritical case, each off origin equilibria changes its stability and a unique unstable limit cycle bifurcates from each of them as shown in \cref{fig:adapt_zoom_tri_limt}. As the parameter $\varepsilon$ increases the unstable limit cycles increase their size until they collide on the saddle equlibria at the origin. After this homoclinic bifurcation occurs \footnote{This is a particular type of global bifurcation that requires further analysis},
+ an interesting phenomenon occurs: the two unstable limit cycles merge into a bigger limit cycle as shown in \cref{fig:eq2D_cycle_before_collapse}. The last important bifurcation consists in the mutual annihilation of the inner (unstable) and outer (stable) limit cycles after which the only attractors in the system are the two off-origin equilibria (stable) and the origin (unstable) (\cref{fig:eq2D_cycle_after_collapse}).
 
-But what happens when the coupling factor $\varepsilon$ increases? The next interesting bifurcation phenomenon occurs at the critical value $\varepsilon^o = g_a + 2$ when a \textbf{supercritical pitchfork bifurcation} occurs. In fact, the origin spawns two unstable equilibria and \textit{changes from unstable node to saddle node. What counts for bifurcations is what happens on the center manifold}. While the parameter $\epsilon > \epsilon^o$ keeps increasing the additional two equilibria moves far away from the origin and additional bifurcations occur. In particular, one can numerically find that at ... hopf bifurcation happens again.
+\iftrue
+   \begin{figure*}[!h]
+        \centering
+        \begin{subfigure}[b]{1\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{text/analysis/fig/2by2adapt/streamline_triple_limit.png}
+        \end{subfigure}
+        \vskip\baselineskip
+        \begin{subfigure}[b]{1\textwidth}  
+            \centering 
+            \includegraphics[width=\textwidth]{text/analysis/fig/2by2adapt/streamline_fixed_zoom.png}
+        \end{subfigure}
+        \caption{Phase portrait of system in \eqref{eq:2D_sync} for $\varepsilon=13.15,\ g_a=10,\ \tau_a=2$. The nullclines are shown in dark red; the streamline plot is shown in black; the outer stable limit cycle is shown in orange; the inner unstable limit cycles (obtained by backward integration in time) are shown in blue. The two pictures show respectively the overall phase portrait (upper) and a zoom on the unstable limit cycle (lower).} 
+        \label{fig:adapt_zoom_tri_limt}
+    \end{figure*}
+\fi
 
 
 \begin{figure}[!h]
-        \center{\includegraphics[width=\textwidth]{text/analysis/fig/2by2adapt/streamline_fixed.png}}
-        \caption{\label{fig:eq2D_mem}Two equilibria}
+        \center{\includegraphics[width=\textwidth]{text/analysis/fig/2by2adapt/streamline_homoclinic.png}}
+        \caption{\label{fig:eq2D_cycle_homoclinic} Phase portrait of system in \eqref{eq:2D_sync} for $\varepsilon=13.2422,\ g_a=10,\ \tau_a=2$. The nullclines are shown in dark red; the streamline plot is shown in black; the outer stable limit cycle is shown in orange; the inner unstable limit cycles (obtained by backward integration in time) are shown in blue.}
 \end{figure}
+
+\begin{figure}[!h]
+        \center{\includegraphics[width=\textwidth]{text/analysis/fig/2by2adapt/streamline_before_collapse.png}}
+        \caption{\label{fig:eq2D_cycle_before_collapse} Phase portrait of system in \eqref{eq:2D_sync} for $\varepsilon=13.24605,\ g_a=10,\ \tau_a=2$. The nullclines are shown in dark red; the streamline plot is shown in black; the outer stable limit cycle is shown in orange; the inner unstable limit cycle (obtained by backward integration in time) is shown in blue.}
+\end{figure}
+
+
+\begin{figure}[!h]
+        \center{\includegraphics[width=\textwidth]{text/analysis/fig/2by2adapt/streamline_after_collapse.png}}
+        \caption{\label{fig:eq2D_cycle_after_collapse} Phase portrait of system in \eqref{eq:2D_sync} for $\varepsilon=13.5,\ g_a=10,\ \tau_a=2$. The nullclines are shown in dark red; the streamline plot is shown in black; several trajectories of the system with different initial conditions are shown in orange. }
+\end{figure}
+
+\paragraph{Simulations on the complete system}
+As we have observed previously, on the synchronisation manifold, the dynamics of the system is quite rich and it qualitatively varies according to the variation of the parameter $\varepsilon$. In order to verify the bifurcation analysis above, in the following we include some simulations and observations about the complete system in \cref{eq:complete_dynamics}. 
+
+The four most important situations above can be resumed as follows:
+\begin{itemize}
+    \item One globally stable equilibrium point with $\varepsilon<2(1+\frac{1}{\tau_a})$ (\cref{fig:eq2D_focus})
+    \item One globally stable limit cycle with $2(1+\frac{1}{\tau_a}) < \varepsilon \lessapprox 12.69$ (\cref{fig:eq2D_cycle})
+    \item One stable limit cycle and two stable equilibria with $12.69 \lessapprox \varepsilon \lessapprox 13.24605$ (\cref{fig:adapt_zoom_tri_limt})
+    \item Two stable equilibria with $\varepsilon \gtrapprox 13.24605$ (\cref{fig:eq2D_cycle_after_collapse})
+\end{itemize}
+In both the first two situations, the attractors on the synchronization manifold are unique ...51200
+
+What is left is to analyse what happens in the two others situations
+
+
+
+\iftrue
+   \begin{figure*}[!h]
+        \centering
+        \begin{subfigure}[b]{1\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{text/analysis/fig/2by2adapt/synch_2_mc_1.png}
+        \end{subfigure}
+        \vskip\baselineskip
+        \begin{subfigure}[b]{1\textwidth}  
+            \centering 
+            \includegraphics[width=\textwidth]{text/analysis/fig/2by2adapt/synch_2_mc_2.png}
+        \end{subfigure}
+        \caption{Phase portrait of system in \eqref{eq:2D_sync} for $\varepsilon=13.15,\ g_a=10,\ \tau_a=2$. The nullclines are shown in dark red; the streamline plot is shown in black; the outer stable limit cycle is shown in orange; the inner unstable limit cycles (obtained by backward integration in time) are shown in blue. The two pictures show respectively the overall phase portrait (upper) and a zoom on the unstable limit cycle (lower).} 
+        \label{fig:adapt_zoom_tri_limt}
+    \end{figure*}
+\fi
