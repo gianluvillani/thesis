@@ -15,11 +15,12 @@ This particular modular structure, as argued in \cite[Chapter~3.3.2]{sandberg200
 \fi
 The equations \eqref{eq:sij}, \eqref{eq:aij}, \eqref{eq:oij} describe, respectively the support and adaptation variables dynamics for a single minicolumn while the equations \eqref{eq:zij}, \eqref{eq:pij} respectively describe the dynamics of the pre- and post- synaptic traces and the estimated action probabilities. 
 
-The\textbf{ support variable} $s_{ij}$ represents the level of activation of the minicolumn $m_{ij}$ (minicolumn j in the hypercolumn i). As shown in in \eqref{eq:sij}, minicolumns are recurrently connected to themselves and to all the other units in the network. Although, this \textbf{dense connectivity} is not reasonable on a biological level, it is required to ensure the stability of networks of small dimensions (Why? Not stated in the original paper. Not found yet a good explanation or at least justification)\todo{should I inlude or explore this statement?}\cite{LansnerFRC}. 
+The\textbf{ support variable} $s_{ij}$ represents the level of activation of the minicolumn $m_{ij}$ (minicolumn j in the hypercolumn i). As shown in in \eqref{eq:sij}, minicolumns are recurrently connected to themselves and to all the other units in the network. 
 
-The variable $a_{ij}$ models the well known biological mechanism of \textbf{neural adaptation}. In particular, neural cells tend to adapt, i.e. they generally decrease their activity, in reaction to a persistent stimulus. In \cite[Chapter~5]{sandberg2003working} this mechanism is claimed to be particularly useful for switching from one stored pattern to another. Adaptation reduces the basin of attraction (stability) of the patterns, therefore it is easier to switch from one attractor to another thanks to noise. Nevertheless, the role of adaptation in our model will be further discussed in Chapter 4.
+The variable $a_{ij}$ models the well known biological mechanism of \textbf{neural adaptation}. In particular, neural cells tend to adapt, i.e. they generally decrease their activity, in reaction to a persistent stimulus. As we will see later in the \textit{Analysis} chapter, the mechanism of adaptation is responsible for the oscillatory behaviour corresponding to the deactivation and re-activation of units in the system.
 
-At the output level, units within the same hypercolumn interact via \textbf{lateral inhibition}, such that each hypercolumn acts as a soft winner-take-all microcircuit. This means that what determines the output of each minicolumn is the relative strength of its activation with respect to the activations of the other units in the same hypercolumn. This interaction is modelled with a \textbf{soft-max} distribution such that each minicolumn $m_{ij}$ has graded output $o_{ij}\in[0,1]$. 
+At the output level, units within the same hypercolumn interact via \textbf{lateral inhibition}, such that each hypercolumn acts as a soft winner-take-all microcircuit. This means that what determines the output of each minicolumn is the relative strength of its activation with respect to the activations of the other units in the same hypercolumn. This interaction is modelled with a \textbf{soft-max} distribution such that each minicolumn $m_{ij}$ has graded output $o_{ij}\in[0,1]$.
+
 \begin{equation}
     \frac{ds_{ij}}{dt} = \frac{g_w(\beta_{ij}+\sum\limits_{k=1}^H\sum\limits_{l=1}^M w_{kl,ij}o_{kl})-a_{ij}+log(I_{ij})+\sigma-s_{ij}}{\tau_m} 
     \label{eq:sij}
@@ -40,7 +41,7 @@ In the following, the presynaptic and postsynaptic minicolumns are respectively 
 The \textbf{network weights} are updated according to a Bayesian-Hebbian learning rule \cite{LansnerFRC}, a slightly modified version of the one proposed in \cite{SANDBERG2000987}.
 
 The learning rule is Hebbian in the sense that it is based on the occurrence statistics collected during encoding, i.e. the phase during which patterns are presented to the network and the weights adapt accordingly.
-The occurence and co-occurence statistics is mediated via the  pre- $z_{i^{\prime}j^{\prime}}$ and post- $z_{ij}$ synaptic trace variables, that, on a biological basis can be seen as the post and presynaptic events involved in synaptic plasticity. 
+The occurence and co-occurence statistics is mediated via the  pre- ($z_{i^{\prime}j^{\prime}}$) and post- ($z_{ij}$) synaptic trace variables, that, on a biological basis can be seen as the post and presynaptic events involved in synaptic plasticity. 
 
 The z-traces typically have relatively short time constants and are updated according to the following equations:
 
