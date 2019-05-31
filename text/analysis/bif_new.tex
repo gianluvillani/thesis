@@ -44,7 +44,7 @@ The dynamics in the new coordinate follows:
 \label{eq:diff_dynamics}
 \end{equation}
 
-The dynamics of coupled variables $(z_1, w_1)$ is linear and it trivially holds that the equilibrium point $(z_1^*,w_1^*)=(-g_a+k, g_a)$ is globally asymptotically stable. Furthermore, it is interesting to notice that the variables  $(z_1, w_1)$ are completely decoupled from $(d_1, e_1)$. The nonlinear dynamics of the former is much richer and requires further analysis. 
+The dynamics of coupled variables $(z_1, w_1)$ is linear and it trivially holds that the equilibrium point $(z_1^*,w_1^*)=(-g_a+k, g_a)$ is globally asymptotically stable. Furthermore, it is interesting to notice that the variables  $(z_1, w_1)$ are completely decoupled from $(d_1, e_1)$ since they do not appear in the former's dynamics. The nonlinear dynamics for $d, e$ is much richer and requires further analysis. 
 
 \paragraph{Bifurcation Analysis}
 We start the analysis of the two dimensional system in \cref{eq:diff_dynamics} by computing the equilibria $(d_1^*,e_1^*)$ and study their stability properties with the variation of the parameters $k, g_a$. As discussed in \cite{LansnerFRC} the adaptation dynamics is much slower than the support dynamics, i.e. $\tau_a > \tau_m$. Keeping in mind that what defines the dynamics is the ratio $\tau_a/\tau_m$, for the rest of the analysis we will keep $\tau_a>1$ fixed, considered as a typical constant of the system and $\tau_m=1$. Notice that the system has a global symmetry property: for each solution $(d_1(t), e_1(t))$ it holds that also $(-d_1(t), -e_1(t))$ is a solution. The roots of the equations below \eqref{eq:eq_d_eq}, \eqref{eq:eq_e_eq} are the equilibria of the dynamics in \eqref{eq:diff_dynamics}.
@@ -68,7 +68,7 @@ We will first analyse the system with $k - g_a < 2$. With this choice of paramet
 
 \begin{equation}
 J_{(0, 0)} = \begin{bmatrix} 
-\frac{k}{2} & -1 \\
+-1 + \frac{k}{2} & -1 \\
 \frac{g_a}{2\tau_a} & -\frac{1}{\tau}
 \end{bmatrix}
 \end{equation}
@@ -105,8 +105,17 @@ At the critical value $k^* = 2 ( 1 + \frac{1}{\tau_a} ) $ a \textbf{supercritica
         \caption{\label{fig:eq2D_cycle} Phase portrait of system in \eqref{eq:diff_dynamics} for $k=8.5,\ g_a=10,\ \tau_a=2$. The nullclines are shown in dark red; the streamline plot is shown in black; several trajectories of the system with different initial conditions are shown in orange.}
 \end{figure}
 
-But what happens when the coupling factor $k$ increases? The next interesting bifurcation phenomenon occurs at the critical value $k^o = g_a + 2$ when a \textbf{supercritical pitchfork bifurcation} occurs. In fact, the origin spawns two unstable equilibria and changes from unstable node to saddle. While the parameter $k > k^o$ keeps increasing the additional two equilibria moves far away from the origin and additional bifurcations occur. In particular, by numerically analising the stability of the Jacbobian matrix at the two off-origin equilibria, a \textbf{subcritical Hopf bifurcation} occurs at the critical value $k^{oo} \approx 12.69$. As discussed in the preliminaries section [cite the right section], in a specular way with respect to what happens in the supercritical case, each off origin equilibria changes its stability and a unique unstable limit cycle bifurcates from each of them as shown in \cref{fig:adapt_zoom_tri_limt}. As the parameter $k$ increases the unstable limit cycles increase their size until they collide on the saddle equlibria at the origin. After this homoclinic bifurcation occurs \footnote{This is a particular type of global bifurcation that requires further analysis},
+But what happens when the coupling factor $k$ increases? The next interesting bifurcation phenomenon occurs at the critical value $k^o = g_a + 2$ when a \textbf{supercritical pitchfork bifurcation} occurs. In fact, the origin spawns two unstable equilibria and changes from unstable node to saddle. While the parameter $k > k^o$ keeps increasing the additional two equilibria moves far away from the origin and additional bifurcations occur.
+
+In the analysis that follows, for the sake of simplicity we choose two fixed values for the parameters $\tau_a=2$ and $g_a=10$ and keep studying the effect of the parameter $k$.
+In particular, by numerically analising the stability of the Jacbobian matrix at the two off-origin equilibria, a \textbf{subcritical Hopf bifurcation} occurs at the critical value $k^{oo} \approx 13.11$. As discussed in the preliminaries section [cite the right section], in a specular way with respect to what happens in the supercritical case, each off origin equilibria changes its stability and a unique unstable limit cycle bifurcates from each of them as shown in \cref{fig:adapt_zoom_tri_limt}. As the parameter $k$ increases the unstable limit cycles increase their size until they collide on the saddle equlibria at the origin. After this homoclinic bifurcation occurs \footnote{This is a particular type of global bifurcation that requires further analysis},
  an interesting phenomenon occurs: the two unstable limit cycles merge into a bigger limit cycle as shown in \cref{fig:eq2D_cycle_before_collapse}. The last important bifurcation consists in the mutual annihilation of the inner (unstable) and outer (stable) limit cycles after which the only attractors in the system are the two off-origin equilibria (stable) and the origin (unstable) (\cref{fig:eq2D_cycle_after_collapse}).
+
+\begin{figure}[H]
+        \center{\includegraphics[width=\textwidth]{text/analysis/fig/2by2adapt/bif_hopf.png}}
+        \caption{\label{fig:bif_hopf_matcont} Bifurcation diagram for the system in \eqref{eq:diff_dynamics} for  for $g_a=10,\ \tau_a=2$. A saddle node bifurcation occurs at $k = g_a + 2 = 12$ and two Hopf bifurcations at $k=13.11590$}
+\end{figure}
+
 
 \iftrue
    \begin{figure*}[!h]
@@ -143,28 +152,11 @@ But what happens when the coupling factor $k$ increases? The next interesting bi
 \end{figure}
 
 \paragraph{Bifurcation results discussion}
-Even for a simple 4-dimensional oscillator, the dynamics of the system is quite rich and it qualitatively varies according to the variation of the parameter $k$.
-The four most important situations above can be resumed as follows:
+Even for a simple 4-dimensional oscillator, the dynamics of the system is quite rich and it qualitatively varies according to the variation of the parameter $k$. In order to verify the bifurcation analysis performed on the \cref{eq:diff_dynamics} we simulate the original system in \cref{eq:complete_dynamics}.
+We chose as an explanatory example the system with $\tau=2, g_a=10$. The system's behaviour above can be resumed as follows:
 \begin{itemize}
-    \item One globally stable equilibrium point with $k<2(1+\frac{1}{\tau_a})$ (\cref{fig:eq2D_focus})
-    \item One globally stable limit cycle with $2(1+\frac{1}{\tau_a}) < k \lessapprox 12.69$ (\cref{fig:eq2D_cycle})
-    \item One stable limit cycle and two stable equilibria with $12.69 \lessapprox k \lessapprox 13.24605$ (\cref{fig:adapt_zoom_tri_limt})
+    \item One globally stable equilibrium point with $k<2(1+\frac{1}{\tau_a})=3$ (\cref{fig:eq2D_focus})
+    \item One globally stable limit cycle with $2(1+\frac{1}{\tau_a}) < k \lessapprox 13.11$ (\cref{fig:eq2D_cycle})
+    \item One stable limit cycle and two stable equilibria with $13.11 \lessapprox k \lessapprox 13.24605$ (\cref{fig:adapt_zoom_tri_limt}). 
     \item Two stable equilibria with $k \gtrapprox 13.24605$ (\cref{fig:eq2D_cycle_after_collapse})
 \end{itemize}
-
-\iftrue
-   \begin{figure*}[!h]
-        \centering
-        \begin{subfigure}[b]{1\textwidth}
-            \centering
-            \includegraphics[width=\textwidth]{text/analysis/fig/2by2adapt/synch_2_mc_1.png}
-        \end{subfigure}
-        \vskip\baselineskip
-        \begin{subfigure}[b]{1\textwidth}  
-            \centering 
-            \includegraphics[width=\textwidth]{text/analysis/fig/2by2adapt/synch_2_mc_2.png}
-        \end{subfigure}
-        \caption{Phase portrait of system in \eqref{eq:diff_dynamics} for $k=13.15,\ g_a=10,\ \tau_a=2$. The nullclines are shown in dark red; the streamline plot is shown in black; the outer stable limit cycle is shown in orange; the inner unstable limit cycles (obtained by backward integration in time) are shown in blue. The two pictures show respectively the overall phase portrait (upper) and a zoom on the unstable limit cycle (lower).} 
-        \label{fig:2D_limit_cycle}
-    \end{figure*}
-\fi

@@ -1,0 +1,73 @@
+\subsubsection{Complete graph}
+In this section we consider a network of $N$ 4-dimensional oscillators whose interaction can be described by a complete undirected graph. Again, it is particularly useful to simplify the dynamics in \cref{eq:complete_dynamics} and use instead \cref{eq:diff_dynamics}. We initially consider a complete homogeneous graph and then we extend the analysis to the situation of a heterogeneous graph. 
+
+For the homogeneous case, the system's dynamics can be described as follows:
+
+\begin{equation} 
+\begin{aligned}
+\dot d_{i} &= - d_i - e_i + k f(d_i) + w\sum\limits_{\substack{k=1 \\ k\neq i}}^N (f(d_k) - f(d_i)), \ w > 0\\
+\tau_a \dot{e}_{i} &= g_a f(d_i) - e_{i} \\
+\end{aligned}
+\label{eq:diff_dynamics}
+\end{equation}
+
+Denote $D_k = d_1 - d_k, E_k = e_1 - e_k,\ \forall k \in \{2, \dots, N\}$. If one can show that $D_k, E_k \forall k \in \{2, \dots, N\}$ go asymptotically to zero then it means that the system achieves synchronisation, i.e. the system asymptotically converges to the manifold where $d_1 = d_2 = \dots = d_N$ and $e_1 = e_2 = \dots = e_N$. In order to show under which sufficient conditions on the coupling strength $w$ this condition is achieved, Lyapunov stability analysis provides the right  tools.
+
+Define the generic error dynamics:
+\begin{equation} 
+\begin{aligned}
+\dot D_{k} &= - D_k - E_k - \alpha (f(d_1) - f(d_k)),\quad \alpha = 2w-k \\
+\tau_a \dot{E}_{k} &= g_a (f(d_1) - f(d_k)) - E_{k} \\
+\end{aligned}
+\label{eq:err_dynamics}
+\end{equation}
+
+Define the following Lyapunov function:
+\begin{equation} 
+\begin{aligned}
+V &= \sum\limits_{k=2}^N( g_a^2 D_k^TD_k + 
+    \frac{\alpha^2\tau_a}{2} E_k^TE_k + g_a\alpha D_k^TE_k) \\
+%V &= g_a^2 \sum\limits_{k=2}^N D_k^TD_k + 
+%    \frac{k\tau_a}{2} \sum\limits_{k=2}^N E_k^TE_k + g_ak\sum\limits_{k=2}^ND_k^TE_k \\
+  &= \sum\limits_{k=2}^N 
+  [D_k^T\ E_k^T]
+  P \begin{bmatrix}D_k \\ E_K \end{bmatrix}, \quad P = \begin{bmatrix} 
+  g_a^2  & \frac{g_a\alpha}{2} \\ 
+  \frac{g_a\alpha}{2} & \frac{\alpha^2\tau_a}{2}  
+   \end{bmatrix} 
+\end{aligned}
+\label{eq:Lyap_complete}
+\end{equation}
+The function in \cref{eq:Lyap_complete} is indeed positive matrix since $P>0$. In order to show that the candidate function $V$ is a proper Lyapunov function,  we have to find the conditions on the coupling strength $w$ such that $\dot V<0$.
+\begin{equation} 
+\begin{aligned}
+\dot V = \sum\limits_{k=2}^N( &2g_a^2 D_k^T\dot D_k + 
+                             \alpha^2 \tau_a E_k^T \dot E_k + 
+                             g_a\alpha D_k^T\dot E_k +
+                             g_a\alpha E_k^T\dot D_k) \\ 
+       = \sum\limits_{k=2}^N(&2g_a^2 D_k^T(- D_k - E_k - \alpha (f(d_1) - f(d_k)))\ +  \\
+       & + \alpha^2 E_k^T(-E_k + g_a(f(d_1) - f(d_k)))\ + \\
+       & + g_a\alpha D_k^T(-E_k + g_a(f(d_1) - f(d_k)))/\tau_a\ + \\
+       & + g_a\alpha E_k^T(- D_k - E_k - \alpha (f(d_1) - f(d_k)))
+\end{aligned}
+\label{eq:Lyap_complete_derivative}
+\end{equation}
+
+Rearranging the terms:
+
+\begin{equation} 
+\begin{aligned}
+\dot V = \sum\limits_{k=2}^N(&-g_a^2(D_k+E_k)^T(D_k+E_k)\ + \\ 
+& - g_a^2\alpha D_k^T(f(d_1) - f(d_k))(2-1/\tau_a)\ + \\
+& - [D_k^T\ E_k^T] \begin{bmatrix}g_a & \frac{g_a\alpha}{2}(1+\frac{1}{\tau_a}) \\ \frac{g_a\alpha}{2}(1+\frac{1}{\tau_a})  & \alpha^2 \end{bmatrix} \begin{bmatrix}D_k \\ E_K \end{bmatrix} + \\
+& - E_k^TE_k(g_a\alpha-g_\alpha^2))
+\end{aligned}
+\label{eq:Lyap_complete_derivative_rarranged}
+\end{equation}
+
+All the terms in the sum are negative definite, except for the last one whose sign depends on the quantity $g_a\alpha-g_a^2$. A sufficient condition for $\dot V$ to be negative definite is to have $\alpha > g_a$, i.e. $w>k$.  We
+
+
+
+
+

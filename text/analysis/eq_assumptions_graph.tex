@@ -1,16 +1,16 @@
 \paragraph{Assumptions}
 Before going further we present the crucial assumptions that will be kept fixed for all the analysis:
  \begin{itemize}
-     \item \textbf{A1} The undirected graph describing network's interaction is fixed, shaped by a previous learning experience.
+     \item \textbf{A1} The undirected graph describing the network's interaction is fixed, shaped by a previous learning experience.
      \item \textbf{A2} Once the coupling weights have been learned, the input signal to the units is removed and the network evolves without any external input.
      \item \textbf{A3} The patterns stored are orthogonal, i.e. each minicolumn is active in one and only one pattern. At the weights level this means that minicolumns that are supposed to fire together are positively coupled with no more than one minicolumn for each of the other hypercolumns. 
      \item \textbf{A4} We assume the existence of a self-excitation term whose principal function is to regularise the activity of each hypercolumn. 
  \end{itemize}
  
 \paragraph{Network Description}
-Consider a generic system made of $h$ units (hypercolumns), each one made of $m$ minicolumns. Denote $s_i = [s_{i1}, \dots, s_{im}]$ and $a_i = [a_{i1}, \dots, a_{im}]$ the $m$-dimensional vectors that represent, respectively, the activities and the adaptation variables of the minicolumns in the hypercolumn $i$; $o_i = [o_{i1}, \dots, o_{im}]$ the corresponding outputs computed with the softmax distribution. The symmetric interactions between the minicolumns $ij, kl$ is mediated via their output $o_{ij}, o_{kl}$ with the weight \textbf{$w_{ijkl}$}.
+Consider a generic system made of $h$ units (hypercolumns), each one made of $m$ minicolumns. Denote $s_i = [s_{i1}, \dots, s_{im}]^T$ and $a_i = [a_{i1}, \dots, a_{im}]^T$ the $m$-dimensional vectors that represent, respectively, the activities and the adaptation variables of the minicolumns in the hypercolumn $i$; $o_i = [o_{i1}, \dots, o_{im}]^T$ the corresponding outputs computed with the softmax distribution. The symmetric interactions between the minicolumns $ij$ and $kl$ is mediated via their output $o_{ij}$ and $o_{kl}$ with the weight \textbf{$w_{ijkl}$}.
 
-Given the assumption \textbf{A2} we can consider the network structure as organised into $m$ levels as in figure \cref{fig:network_levels} with an associated graph $\mathcal{G}_i$ for each level. Nevertheless, for the sake of simplicity we initially assume that $\mathcal{G}_1 = \mathcal{G}_2 = \dots = \mathcal{G}_m$ such that it is sufficient a unique graph $\mathcal{G}$ to describe the network at the hypercolumns level. Therefore, we can write $w_{ijkl}=w_{ik},\ \forall j, l$ and denote $W =\left[w\right]_{ik}$ the symmetric adjacency matrix associated to the network. Given the previous considerations and taking into account \textbf{A4} we can write
+Given the assumption \textbf{A2} we can consider the network structure as organised into $m$ levels as in figure \cref{fig:network_levels} with an associated graph $\mathcal{G}_i$ for each level. Nevertheless, for the sake of simplicity we initially assume that $\mathcal{G}_1 = \mathcal{G}_2 = \dots = \mathcal{G}_m=\mathcal{G}$ such that it is sufficient a unique graph $\mathcal{G}$ to describe the network at the hypercolumns level. Therefore, we can write $w_{ijkl}=w_{ik},\ \forall j, l$ and denote $W =\left[w\right]_{ik}$ the symmetric adjacency matrix associated to the network. Given the previous considerations and taking into account \textbf{A4} we can write:
 
 \begin{equation}
     \frac{ds_{ij}}{dt} = \frac{\sum\limits_{k=1}^H w_{ik}o_{kj}-a_{ij}-s_{ij} + \alpha_{ij} o_{ij}}{\tau_m} 
@@ -24,19 +24,21 @@ Given the assumption \textbf{A2} we can consider the network structure as organi
     o_{ij} = \frac{e^{s_{ij}}}{ \sum\limits_{k=1}^m e^{s_{ik}}}
     \label{eq:oij_net}
 \end{equation}
+
 Under the assumption that $\sum\limits_{k=1}^H w_{ik} + \alpha_{ij}=k, \forall i \in \{1, 2, ..., h\}$ \todo{to be justified properly, but atm it's fine} it is particularly convenient to rewrite \cref{eq:sij_net} in the following form:
+
 \begin{equation}
     \frac{ds_{ij}}{dt} = \frac{\sum\limits_{k=1}^H w_{ik}(o_{kj}-o_{ij})-a_{ij}-s_{ij} + k o_{ij}}{\tau_m} 
     \label{eq:sij_net_nice}
 \end{equation}
-By denoting $x_i=[s_i, a_i]^{T}$ :
+By denoting $x_i=[s_i, a_i]^{T}, h(x_i)=[o_i, 0_{m \times 1}]^T$ :
 
 \begin{equation}
-    \frac{dx_i}{dt} = f(x_i,k) + \sum\limits_{k=1}^H w_{ik}(o_{k}-o_{i}),\quad x_i \in \mathbb{R}^{2m},\ k \in \mathbb{R}^+ 
+    \frac{dx_i}{dt} = f(x_i,k) + \sum\limits_{k=1}^h w_{ik}(h(x_k)-h(x_i)),\quad x_i \in \mathbb{R}^{2m},\ k \in \mathbb{R}^+
     \label{eq:identical_diffusively}
 \end{equation}
 
-Given the form of the coupling in \cref{eq:identical_diffusively} one solution is always the synchronous state $x_i(t)=\Tilde{x}(t)$ when the units are synchronised. Before studying under which conditions on the coupling matrix $W$ synchronization occurs, it is interesting to study, for the simple case when $m=2$ how the positive real parameter $k$ affects the dynamics of the single oscillators.
+Given the form of the coupling in \cref{eq:identical_diffusively} one solution is always the synchronous state $x_i(t)=\Tilde{x}(t)$. Before studying under which conditions on the coupling matrix $W$ synchronization occurs, it is interesting to study, for the simple case when $m=2$ how the positive real parameter $k$ affects the dynamics of the single oscillators.
 
 \begin{figure}
     \centering

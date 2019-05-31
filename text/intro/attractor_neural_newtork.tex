@@ -36,7 +36,10 @@ We will now consider a model based on continuous variables and responses that re
 
 \subsection{Potts models}
 Generalization of the Hopfield model in the previous section. Should decide here what to include exactly.
+
 \subsection{Palimpsest memories}
 Two legitimate questions when working with memory models are whether their storage capacity is finite and what happens when one presents to the memory too many patterns. While the first question has a trivial answer, given the finite dimensionality of the network and activations, the answer to the second one depends on the learning rule. In particular as more and more patterns are presented, the network's ability to store the patterns will start to decline. For simple learning rules like the classic hebbian rule in \eqref{eq:hebbs_classic}, there is no distinction between \textit{old} and \textit{new} patterns, therefore once the maximum storing capacity is reached, the memories start to interfere with each other until, in abrupt manner, almost all patterns are disrupt nearly at the same time. This problem, well known as catastrophic forgetting, appears relevant since it is not usually observed in biological systems. To cope with this issue alternative learning rules have been proposed (incremental learning for example). \textbf{Here to add a couple of lines about how is this related to our system. Also add some citations}
 
 \subsection{Free Recall dynamics}
+
+Here I talk about oscillations in neural system. I cite some works about working memory and dynamical structures that define the \textit{free recall dynamics}. CIte for example heteroclinic channels and so on....
