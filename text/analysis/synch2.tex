@@ -1,73 +1,93 @@
-\subsubsection{Complete graph}
-In this section we consider a network of $N$ 4-dimensional oscillators whose interaction can be described by a complete undirected graph. Again, it is particularly useful to simplify the dynamics in \cref{eq:complete_dynamics} and use instead \cref{eq:diff_dynamics}. We initially consider a complete homogeneous graph and then we extend the analysis to the situation of a heterogeneous graph. 
+\subsubsection{Complete homogeneous graph}
+In this section we consider a network of $N$ 4-dimensional oscillators whose interaction can be described by a complete, homogeneous undirected graph. In particular, we are interested on the conditions on the weight $w$ that ensures global synchronization. Again, it is particularly useful to simplify the dynamics in \cref{eq:complete_dynamics} and use instead \cref{eq:diff_dynamics}. 
 
-For the homogeneous case, the system's dynamics can be described as follows:
+The system's dynamics can be described as follows:
 
 \begin{equation} 
 \begin{aligned}
 \dot d_{i} &= - d_i - e_i + k f(d_i) + w\sum\limits_{\substack{k=1 \\ k\neq i}}^N (f(d_k) - f(d_i)), \ w > 0\\
 \tau_a \dot{e}_{i} &= g_a f(d_i) - e_{i} \\
 \end{aligned}
-\label{eq:diff_dynamics}
+\label{eq:diff_dynamics_network}
 \end{equation}
 
-Denote $D_k = d_1 - d_k, E_k = e_1 - e_k,\ \forall k \in \{2, \dots, N\}$. If one can show that $D_k, E_k \forall k \in \{2, \dots, N\}$ go asymptotically to zero then it means that the system achieves synchronisation, i.e. the system asymptotically converges to the manifold where $d_1 = d_2 = \dots = d_N$ and $e_1 = e_2 = \dots = e_N$. In order to show under which sufficient conditions on the coupling strength $w$ this condition is achieved, Lyapunov stability analysis provides the right  tools.
+Denote $D_k = d_1 - d_k, E_k = e_1 - e_k,\ \forall k \in \{2, \dots, N\}$. If one can show that $D_k, E_k,\ \forall k \in \{2, \dots, N\}$ go asymptotically to zero then the system achieves synchronisation, i.e. the system asymptotically converges to the manifold where $d_1 = d_2 = \dots = d_N$ and $e_1 = e_2 = \dots = e_N$. We can use Lyapunov stability analysis to find sufficient conditions on the coupling strength $\omega$ such that the system asymptotically converge to the synchronisation manifold.
 
 Define the generic error dynamics:
 \begin{equation} 
 \begin{aligned}
-\dot D_{k} &= - D_k - E_k - \alpha (f(d_1) - f(d_k)),\quad \alpha = 2w-k \\
+\dot D_{k} &= - D_k - E_k - \alpha (f(d_1) - f(d_k)) \\
 \tau_a \dot{E}_{k} &= g_a (f(d_1) - f(d_k)) - E_{k} \\
+&(f(d_1) - f(d_k))D_k \geq 0
+\end{aligned}
+\label{eq:err_dynamics}
+\end{equation}
+and define $\alpha = \frac{1}{\tau_a}, \alpha <1 $. By multiplying the second equation in \cref{eq:err_dynamics} with $\alpha$, the error dynamics can be rewritten as:
+\begin{equation} 
+\begin{aligned}
+\dot D_{k} &= - D_k - E_k - \alpha (f(d_1) - f(d_k)) \\
+\dot{E}_{k} &=  \bar g (f(d_1) - f(d_k)) - \alpha E_{k}, \quad \bar g = \alpha g. \\
 \end{aligned}
 \label{eq:err_dynamics}
 \end{equation}
 
 Define the following Lyapunov function:
-\begin{equation} 
+\begin{equation}
 \begin{aligned}
-V &= \sum\limits_{k=2}^N( g_a^2 D_k^TD_k + 
-    \frac{\alpha^2\tau_a}{2} E_k^TE_k + g_a\alpha D_k^TE_k) \\
-%V &= g_a^2 \sum\limits_{k=2}^N D_k^TD_k + 
-%    \frac{k\tau_a}{2} \sum\limits_{k=2}^N E_k^TE_k + g_ak\sum\limits_{k=2}^ND_k^TE_k \\
-  &= \sum\limits_{k=2}^N 
-  [D_k^T\ E_k^T]
-  P \begin{bmatrix}D_k \\ E_K \end{bmatrix}, \quad P = \begin{bmatrix} 
-  g_a^2  & \frac{g_a\alpha}{2} \\ 
-  \frac{g_a\alpha}{2} & \frac{\alpha^2\tau_a}{2}  
-   \end{bmatrix} 
+V &= \sum\limits_{k=2}^N V_k, \\
+\quad V_k &= \frac{1}{2}(\bar g D_k + \omega E_k)^2 + \frac{1}{2}\beta\omega D_k^2, \quad \beta = \bar g + (\alpha - 1)\omega \geq 0
 \end{aligned}
 \label{eq:Lyap_complete}
 \end{equation}
-The function in \cref{eq:Lyap_complete} is indeed positive matrix since $P>0$. In order to show that the candidate function $V$ is a proper Lyapunov function,  we have to find the conditions on the coupling strength $w$ such that $\dot V<0$.
+By assuming $\omega< \frac{\alpha}{1-\alpha}g_a$ the function in \cref{eq:Lyap_complete} is indeed positive definite. In order to show that the candidate function $V$ is a proper Lyapunov function,  we have to find the conditions on the coupling strength $w$ such that $\dot V<0$. 
 \begin{equation} 
 \begin{aligned}
-\dot V = \sum\limits_{k=2}^N( &2g_a^2 D_k^T\dot D_k + 
-                             \alpha^2 \tau_a E_k^T \dot E_k + 
-                             g_a\alpha D_k^T\dot E_k +
-                             g_a\alpha E_k^T\dot D_k) \\ 
-       = \sum\limits_{k=2}^N(&2g_a^2 D_k^T(- D_k - E_k - \alpha (f(d_1) - f(d_k)))\ +  \\
-       & + \alpha^2 E_k^T(-E_k + g_a(f(d_1) - f(d_k)))\ + \\
-       & + g_a\alpha D_k^T(-E_k + g_a(f(d_1) - f(d_k)))/\tau_a\ + \\
-       & + g_a\alpha E_k^T(- D_k - E_k - \alpha (f(d_1) - f(d_k)))
+\dot V =  - \sum\limits_{k=2}^N & ((\bar gD_k + \omega E_k)^2 + \\
++ &\beta \bar g D_k E_k + \beta \omega E_k^2 + \omega \beta D_k^2 + \omega D_k E_k +\\
++ &\omega ^2 \beta D_k (f(d_1) - f(d_k)))
 \end{aligned}
 \label{eq:Lyap_complete_derivative}
 \end{equation}
-
-Rearranging the terms:
-
+Rearranging the tems in \eqref{eq:Lyap_complete_derivative}:
 \begin{equation} 
 \begin{aligned}
-\dot V = \sum\limits_{k=2}^N(&-g_a^2(D_k+E_k)^T(D_k+E_k)\ + \\ 
-& - g_a^2\alpha D_k^T(f(d_1) - f(d_k))(2-1/\tau_a)\ + \\
-& - [D_k^T\ E_k^T] \begin{bmatrix}g_a & \frac{g_a\alpha}{2}(1+\frac{1}{\tau_a}) \\ \frac{g_a\alpha}{2}(1+\frac{1}{\tau_a})  & \alpha^2 \end{bmatrix} \begin{bmatrix}D_k \\ E_K \end{bmatrix} + \\
-& - E_k^TE_k(g_a\alpha-g_\alpha^2))
+\dot V =  - \sum\limits_{k=2}^N(& (\bar gD_k + \omega E_k)^2 + \\
++ &\omega \beta \left (E_k^2 + D_k^2 + \left(1 + \frac{\bar g}{\omega}\right) D_k E_k\right )  +\\
++ &\omega ^2 \beta D_k (f(d_1) - f(d_k)))
 \end{aligned}
-\label{eq:Lyap_complete_derivative_rarranged}
+\label{eq:Lyap_complete_derivative_rearranged}
 \end{equation}
 
-All the terms in the sum are negative definite, except for the last one whose sign depends on the quantity $g_a\alpha-g_a^2$. A sufficient condition for $\dot V$ to be negative definite is to have $\alpha > g_a$, i.e. $w>k$.  We
+$\omega \beta \left (E_k^2 + D_k^2 + \left(1 + \frac{\bar g}{\omega}\right) D_k E_k\right )$ is positive definite if $1 + \frac{\bar g}{\omega} <2$, i.e. $\omega > \alpha g$. Therefore, a sufficient condition for global synchronisation is:
+\begin{equation} 
+\begin{aligned}
+\omega_{min} = g_a \alpha < \omega < \frac{\alpha}{1 - \alpha}g_a = \omega_{max}
+\end{aligned}
+\label{eq:omega_bounds}
+\end{equation}
+
+\subsubsection{Conditions for oscillations and synchronization}
+As discussed in the bifurcation analysis section, for a homogeneous network, the dynamics of the system on the synchronisation manifold is affected both by the number of nodes $N$ and the magnitude of the coupling factor $\omega$: fixed $g_a, \tau_a$ the dynamics is shaped by the parameter $\alpha = (N-1)\omega$. We are interested in particular in the range $\left[2\left(1+\frac{1}{\tau_a}\right),\ g_a + 2\right] = [\alpha_{min}, \alpha_{max}]$\footnote{In the bifurcation analysis it was shown that the actual upper bound $\alpha_{max}$ is not exactly $g_a+2$ but a more complex function of the parameters $g_a, \tau_a$. For the case of $g_a =10, \tau_a=2$ this upper bound was computed numerically ($\alpha^{oo}\approx 13.11$). Therefore, for the sake of simplicity, we will use the more conservative upper bound $\alpha_{max}=g_a+2$}. In fact, for this range of values of $\alpha$ the oscillatory mode is the only stable mode (the only stable attractor is a limit cycle). Therefore, is interesting to find the range $[N_{min}, N_{max}]$ as a function of the parameters $g_a, \tau_a$ such that given the constraints in \cref{eq:omega_bounds}, $\alpha = (N-1)w \in [\alpha_{min}, \alpha_{max}]$:
+\begin{equation} 
+\begin{aligned}
+\alpha_{min} < N \omega < \alpha_{max}, \quad \forall \omega \in [\omega_{min}, \omega_{max}], \quad N \in [N_{min}, N_{max}]
+\end{aligned}
+\label{eq:omega_alpha_bounds}
+\end{equation}
+The condition in \cref{eq:omega_alpha_bounds} is satisfied only if 
+\begin{equation} 
+\begin{aligned}
+\min\limits_{\omega \in [\omega_{min}, \omega_{max}] }(N-1)\omega= (N-1)\omega_{min} \leq \alpha_{min} \\
+\max\limits_{\omega \in [\omega_{min}, \omega_{max}] }(N-1)\omega = (N-1)\omega_{max} \leq \alpha_{max} 
+\end{aligned}
+\label{eq:omega_alpha_bounds}
+\end{equation}
+Therefore:
+\begin{equation}
+\frac{2}{g_a} \frac{1 + \alpha}{\alpha} + 1< N < \frac{1}{g_a} \frac{1 - \alpha}{\alpha}(g_a + 2) + 1
+\label{eq:n_constraints}
+\end{equation}
+ 
 
 
-
-
-
+\subsubsection{Heterogeneous graph}

@@ -1,0 +1,44 @@
+Define the following Lyapunov function:
+\begin{equation} 
+\begin{aligned}
+V &= \sum\limits_{k=2}^N( g_a^2 D_k^TD_k + 
+    \frac{\alpha^2\tau_a}{2} E_k^TE_k + g_a\alpha D_k^TE_k) \\
+%V &= g_a^2 \sum\limits_{k=2}^N D_k^TD_k + 
+%    \frac{k\tau_a}{2} \sum\limits_{k=2}^N E_k^TE_k + g_ak\sum\limits_{k=2}^ND_k^TE_k \\
+  &= \sum\limits_{k=2}^N 
+  [D_k^T\ E_k^T]
+  P \begin{bmatrix}D_k \\ E_K \end{bmatrix}, \quad P = \begin{bmatrix} 
+  g_a^2  & \frac{g_a\alpha}{2} \\ 
+  \frac{g_a\alpha}{2} & \frac{\alpha^2\tau_a}{2}  
+   \end{bmatrix} 
+\end{aligned}
+\label{eq:Lyap_complete}
+\end{equation}
+The function in \cref{eq:Lyap_complete} is indeed positive matrix since $P>0$. In order to show that the candidate function $V$ is a proper Lyapunov function,  we have to find the conditions on the coupling strength $w$ such that $\dot V<0$.
+\begin{equation} 
+\begin{aligned}
+\dot V = \sum\limits_{k=2}^N( &2g_a^2 D_k^T\dot D_k + 
+                             \alpha^2 \tau_a E_k^T \dot E_k + 
+                             g_a\alpha D_k^T\dot E_k +
+                             g_a\alpha E_k^T\dot D_k) \\ 
+       = \sum\limits_{k=2}^N(&2g_a^2 D_k^T(- D_k - E_k - \alpha (f(d_1) - f(d_k)))\ +  \\
+       & + \alpha^2 E_k^T(-E_k + g_a(f(d_1) - f(d_k)))\ + \\
+       & + g_a\alpha D_k^T(-E_k + g_a(f(d_1) - f(d_k)))/\tau_a\ + \\
+       & + g_a\alpha E_k^T(- D_k - E_k - \alpha (f(d_1) - f(d_k)))
+\end{aligned}
+\label{eq:Lyap_complete_derivative}
+\end{equation}
+
+Rearranging the terms:
+
+\begin{equation} 
+\begin{aligned}
+\dot V = \sum\limits_{k=2}^N(&-g_a^2(D_k+E_k)^T(D_k+E_k)\ + \\ 
+& - g_a^2\alpha D_k^T(f(d_1) - f(d_k))(2-1/\tau_a)\ + \\
+& - [D_k^T\ E_k^T] \begin{bmatrix}g_a & \frac{g_a\alpha}{2}(1+\frac{1}{\tau_a}) \\ \frac{g_a\alpha}{2}(1+\frac{1}{\tau_a})  & \alpha^2 \end{bmatrix} \begin{bmatrix}D_k \\ E_K \end{bmatrix} + \\
+& - E_k^TE_k(g_a\alpha-g_\alpha^2))
+\end{aligned}
+\label{eq:Lyap_complete_derivative_rarranged}
+\end{equation}
+
+All the terms in the sum are negative definite, except for the last one whose sign depends on the quantity $g_a\alpha-g_a^2$. A sufficient condition for $\dot V$ to be negative definite is to have $\alpha > g_a$, i.e. $w>k$.  We

@@ -1,10 +1,9 @@
-As already discussed in the previous section, in order to get an insight into the dynamics of the system it is interesting to consider a single uncoupled oscillator in \cref{eq:identical_diffusively}
-with $m=2$. The dynamics of the system follows:
+Consider a complete, homogeneous graph of $N$ hypercolumns, each one consisting of 2 minicolumns. Denote $w$ the weight, identical for all the edges, it follows that $\alpha=(N-1)w$. Therefore, on the synchronization manifold, we can describe the dynamics of the single oscillators independently.
 \begin{equation}
 \begin{aligned}
-    \tau_m \dot{s}_{11}&=-s_{11}-a_{11}+ k o_{11} \\
+    \tau_m \dot{s}_{11}&=-s_{11}-a_{11}+ \alpha o_{11} \\
     \tau_a \dot{a}_{11}&=g_a o_{11} - a_{11} \\
-    \tau_m \dot{s}_{12}&=-s_{12}-a_{12}+ k o_{12} \\
+    \tau_m \dot{s}_{12}&=-s_{12}-a_{12}+ \alpha o_{12} \\
     \tau_a \dot{a}_{12}&=g_a o_{12} - a_{12} \\
 \end{aligned}
 \label{eq:complete_dynamics}
@@ -12,7 +11,7 @@ with $m=2$. The dynamics of the system follows:
 
 The system described in \eqref{eq:complete_dynamics} is a 4 dimensional system but its analysis can be easily simplified by exploiting some nice properties of the output softmax function. In particular the two following properties hold:  
 \begin{equation}
- \sum_{k=1}^{N} o_{i k}=1
+ \sum_{k=1}^{m} o_{i k}=1
  \label{soft_sum}
 \end{equation}
 \begin{equation}
@@ -31,25 +30,25 @@ e_1 &= a_{11} - a_{12} \\
 The dynamics in the new coordinate follows:
 \begin{equation} 
 \begin{aligned}
-\tau_m \dot z_1 &= - z_1 - w_1 + k\\
+\tau_m \dot z_1 &= - z_1 - w_1 + \alpha\\
 \tau_a \dot w_1 &= g_a - w_1
 \end{aligned}
 \label{eq:sum_dynamics}
 \end{equation}
 \begin{equation} 
 \begin{aligned}
-\tau_m \dot d_{1} &= - d_1 - e_1 + k f(d_1) \\
+\tau_m \dot d_{1} &= - d_1 - e_1 + \alpha f(d_1) \\
 \tau_a \dot{e}_{1} &= g_a f(d_1) - e_{1} \\
 \end{aligned}
 \label{eq:diff_dynamics}
 \end{equation}
 
-The dynamics of coupled variables $(z_1, w_1)$ is linear and it trivially holds that the equilibrium point $(z_1^*,w_1^*)=(-g_a+k, g_a)$ is globally asymptotically stable. Furthermore, it is interesting to notice that the variables  $(z_1, w_1)$ are completely decoupled from $(d_1, e_1)$ since they do not appear in the former's dynamics. The nonlinear dynamics for $d, e$ is much richer and requires further analysis. 
+The dynamics of coupled variables $(z_1, w_1)$ is linear and it trivially holds that the equilibrium point $(z_1^*,w_1^*)=(-g_a+\alpha, g_a)$ is globally asymptotically stable. Furthermore, it is interesting to notice that the variables  $(z_1, w_1)$ are completely decoupled from $(d_1, e_1)$ since they do not appear in the former's dynamics. The nonlinear dynamics for $d, e$ is much richer and requires further analysis. 
 
 \paragraph{Bifurcation Analysis}
-We start the analysis of the two dimensional system in \cref{eq:diff_dynamics} by computing the equilibria $(d_1^*,e_1^*)$ and study their stability properties with the variation of the parameters $k, g_a$. As discussed in \cite{LansnerFRC} the adaptation dynamics is much slower than the support dynamics, i.e. $\tau_a > \tau_m$. Keeping in mind that what defines the dynamics is the ratio $\tau_a/\tau_m$, for the rest of the analysis we will keep $\tau_a>1$ fixed, considered as a typical constant of the system and $\tau_m=1$. Notice that the system has a global symmetry property: for each solution $(d_1(t), e_1(t))$ it holds that also $(-d_1(t), -e_1(t))$ is a solution. The roots of the equations below \eqref{eq:eq_d_eq}, \eqref{eq:eq_e_eq} are the equilibria of the dynamics in \eqref{eq:diff_dynamics}.
+We start the analysis of the two dimensional system in \cref{eq:diff_dynamics} by computing the equilibria $(d_1^*,e_1^*)$ and study their stability properties with the variation of the parameters $\alpha, g_a$. As discussed in \cite{LansnerFRC} the adaptation dynamics is much slower than the support dynamics, i.e. $\tau_a > \tau_m$. Keeping in mind that what defines the dynamics is the ratio $\tau_a/\tau_m$, for the rest of the analysis we will keep $\tau_a>1$ fixed, considered as a typical constant of the system and $\tau_m=1$. Notice that the system has a global symmetry property: for each solution $(d_1(t), e_1(t))$ it holds that also $(-d_1(t), -e_1(t))$ is a solution. The roots of the equations below \eqref{eq:eq_d_eq}, \eqref{eq:eq_e_eq} are the equilibria of the dynamics in \eqref{eq:diff_dynamics}.
 \begin{equation}
- (k - g_a)f(d_1^*) - d_1^* = 0
+ (\alpha - g_a)f(d_1^*) - d_1^* = 0
 \label{eq:eq_d_eq}
 \end{equation}
 \begin{equation}
@@ -57,24 +56,24 @@ e_1^* = g_a f(d_1^*)
 \label{eq:eq_e_eq}
 \end{equation}
 
-The number of equilibria is uniquely defined by the quantity $k-g_a$. In particular, it is easy to show that there is a unique equilibrium for $k \leq g_a-2$, while for $k > g_a-2$ we have three equilibrium points. Unfortunately, since the equilibria can not be computed analytically we will make use of numerical analysis. In \cref{fig:eq2D_adapt} the three most important cases are plotted.
+The number of equilibria is uniquely defined by the quantity $\alpha-g_a$. In particular, it is easy to show that there is a unique equilibrium for $\alpha \leq g_a-2$, while for $\alpha > g_a-2$ we have three equilibrium points. Unfortunately, since the equilibria can not be computed analytically we will make use of numerical analysis. In \cref{fig:eq2D_adapt} the three most important cases are plotted.
 
  \begin{figure}[!h]
         \center{\includegraphics[width=\textwidth]{text/analysis/fig/2by2adapt/equilibria_2D.png}}
-        \caption{\label{fig:eq2D_adapt} Graphical visualization of the roots of the equation in \eqref{eq:eq_d_eq}} with varying the quantity $k - g_a$.
+        \caption{\label{fig:eq2D_adapt} Graphical visualization of the roots of the equation in \eqref{eq:eq_d_eq}} with varying the quantity $\alpha - g_a$.
 \end{figure}
 
-We will first analyse the system with $k - g_a < 2$. With this choice of parameters the unique equilibrium is the point $(d_1^*,e_1^*)=(0, 0)$. The computed jacobian matrix $J_{(0,0)}$ and the characteristic polynomial are the following:
+We will first analyse the system with $\alpha - g_a < 2$. With this choice of parameters the unique equilibrium is the point $(d_1^*,e_1^*)=(0, 0)$. The computed jacobian matrix $J_{(0,0)}$ and the characteristic polynomial are the following:
 
 \begin{equation}
 J_{(0, 0)} = \begin{bmatrix} 
--1 + \frac{k}{2} & -1 \\
+-1 + \frac{\alpha}{2} & -1 \\
 \frac{g_a}{2\tau_a} & -\frac{1}{\tau}
 \end{bmatrix}
 \end{equation}
 
 \begin{equation}
-\rho(\lambda) = \lambda^2 +  \frac{2\tau_a + 2 - \tau_a k}{2\tau_a} \lambda + \frac{-2k + 2g_a + 4}{4\tau_a}
+\rho(\lambda) = \lambda^2 +  \frac{2\tau_a + 2 - \tau_a \alpha}{2\tau_a} \lambda + \frac{-2\alpha + 2g_a + 4}{4\tau_a}
 \end{equation}
 
 \begin{equation}
@@ -85,35 +84,35 @@ In order to study the stability of the equilibrium point one can study the sign 
 
 \begin{equation}
 \begin{aligned}
- a < 0 \iff & k > 2(1 + \frac{1}{\tau_a}) \\
- b < 0 \iff & k > g_a + 2
+ a < 0 \iff & \alpha > 2\left(1 + \frac{1}{\tau_a}\right) \\
+ b < 0 \iff & \alpha > g_a + 2
 \end{aligned}
 \end{equation}
 
-When $k<2(1+\frac{1}{\tau_a})$ the origin is an asymptotically stable equilibrium point. This condition is not particularly interesting since it means that all the units in the network converge to the same value and their output is identical. In other words, the network is not able to recall any pattern (\cref{fig:eq2D_focus}).
+When $\alpha<2(1+\frac{1}{\tau_a})$ the origin is an asymptotically stable equilibrium point. This condition is not particularly interesting since it means that all the units in the network converge to the same value and their output is identical. In other words, the network is not able to recall any pattern (\cref{fig:eq2D_focus}).
 
 \begin{figure}[H]
         \center{\includegraphics[width=\textwidth]{text/analysis/fig/2by2adapt/streamline_stable_focus.png}}
-        \caption{\label{fig:eq2D_focus} Phase portrait of system in \eqref{eq:diff_dynamics} for $k=1.5,\ g_a=10,\ \tau_a=2$. The nullclines are shown in dark red; the streamline plot is shown in black; several trajectories of the system with different initial conditions are shown in orange.}
+        \caption{\label{fig:eq2D_focus} Phase portrait of system in \eqref{eq:diff_dynamics} for $\alpha=1.5,\ g_a=10,\ \tau_a=2$. The nullclines are shown in dark red; the streamline plot is shown in black; several trajectories of the system with different initial conditions are shown in orange.}
 \end{figure}
 
 
-At the critical value $k^* = 2 ( 1 + \frac{1}{\tau_a} ) $ a \textbf{supercritical Hopf} bifurcation occurs. In fact, as $k$ passes through $k^*$, the complex eigenvalues $\lambda_{1,2}$ cross the imaginary axis. In fact, ${\rm I\!R}(\lambda_{1,2})<0, k < k^*$ and  ${\rm I\!R}(\lambda_{1,2})>0, k > k^*$. Therefore, the equilibrium point $(0, 0)$ changes its stability and a unique stable limit cycle bifurcates from it (\cref{fig:eq2D_cycle}).
+At the critical value $\alpha^* = 2 ( 1 + \frac{1}{\tau_a} ) $ a \textbf{supercritical Hopf} bifurcation occurs. In fact, as $\alpha$ passes through $\alpha^*$, the complex eigenvalues $\lambda_{1,2}$ cross the imaginary axis. In fact, ${\rm I\!R}(\lambda_{1,2})<0, \alpha < \alpha^*$ and  ${\rm I\!R}(\lambda_{1,2})>0, \alpha > \alpha^*$. Therefore, the equilibrium point $(0, 0)$ changes its stability and a unique stable limit cycle bifurcates from it (\cref{fig:eq2D_cycle}).
 
 \begin{figure}[H]
         \center{\includegraphics[width=\textwidth]{text/analysis/fig/2by2adapt/streamline_cycle.png}}
-        \caption{\label{fig:eq2D_cycle} Phase portrait of system in \eqref{eq:diff_dynamics} for $k=8.5,\ g_a=10,\ \tau_a=2$. The nullclines are shown in dark red; the streamline plot is shown in black; several trajectories of the system with different initial conditions are shown in orange.}
+        \caption{\label{fig:eq2D_cycle} Phase portrait of system in \eqref{eq:diff_dynamics} for $\alpha=8.5,\ g_a=10,\ \tau_a=2$. The nullclines are shown in dark red; the streamline plot is shown in black; several trajectories of the system with different initial conditions are shown in orange.}
 \end{figure}
 
-But what happens when the coupling factor $k$ increases? The next interesting bifurcation phenomenon occurs at the critical value $k^o = g_a + 2$ when a \textbf{supercritical pitchfork bifurcation} occurs. In fact, the origin spawns two unstable equilibria and changes from unstable node to saddle. While the parameter $k > k^o$ keeps increasing the additional two equilibria moves far away from the origin and additional bifurcations occur.
+But what happens when the coupling factor $\alpha$ increases? The next interesting bifurcation phenomenon occurs at the critical value $\alpha^o = g_a + 2$ when a \textbf{supercritical pitchfork bifurcation} occurs. In fact, the origin spawns two unstable equilibria and changes from unstable node to saddle. While the parameter $\alpha > \alpha^o$ keeps increasing the additional two equilibria moves far away from the origin and additional bifurcations occur.
 
-In the analysis that follows, for the sake of simplicity we choose two fixed values for the parameters $\tau_a=2$ and $g_a=10$ and keep studying the effect of the parameter $k$.
-In particular, by numerically analising the stability of the Jacbobian matrix at the two off-origin equilibria, a \textbf{subcritical Hopf bifurcation} occurs at the critical value $k^{oo} \approx 13.11$. As discussed in the preliminaries section [cite the right section], in a specular way with respect to what happens in the supercritical case, each off origin equilibria changes its stability and a unique unstable limit cycle bifurcates from each of them as shown in \cref{fig:adapt_zoom_tri_limt}. As the parameter $k$ increases the unstable limit cycles increase their size until they collide on the saddle equlibria at the origin. After this homoclinic bifurcation occurs \footnote{This is a particular type of global bifurcation that requires further analysis},
+In the analysis that follows, for the sake of simplicity we choose two fixed values for the parameters $\tau_a=2$ and $g_a=10$ and keep studying the effect of the parameter $\alpha$.
+In particular, by numerically analising the stability of the Jacbobian matrix at the two off-origin equilibria, a \textbf{subcritical Hopf bifurcation} occurs at the critical value $\alpha^{oo} \approx 13.11$. As discussed in the preliminaries section [cite the right section], in a specular way with respect to what happens in the supercritical case, each off origin equilibria changes its stability and a unique unstable limit cycle bifurcates from each of them as shown in \cref{fig:adapt_zoom_tri_limt}. As the parameter $\alpha$ increases the unstable limit cycles increase their size until they collide on the saddle equlibria at the origin. After this homoclinic bifurcation occurs \footnote{This is a particular type of global bifurcation that requires further analysis},
  an interesting phenomenon occurs: the two unstable limit cycles merge into a bigger limit cycle as shown in \cref{fig:eq2D_cycle_before_collapse}. The last important bifurcation consists in the mutual annihilation of the inner (unstable) and outer (stable) limit cycles after which the only attractors in the system are the two off-origin equilibria (stable) and the origin (unstable) (\cref{fig:eq2D_cycle_after_collapse}).
 
 \begin{figure}[H]
         \center{\includegraphics[width=\textwidth]{text/analysis/fig/2by2adapt/bif_hopf.png}}
-        \caption{\label{fig:bif_hopf_matcont} Bifurcation diagram for the system in \eqref{eq:diff_dynamics} for  for $g_a=10,\ \tau_a=2$. A saddle node bifurcation occurs at $k = g_a + 2 = 12$ and two Hopf bifurcations at $k=13.11590$}
+        \caption{\label{fig:bif_hopf_matcont} Bifurcation diagram for the system in \eqref{eq:diff_dynamics} for  for $g_a=10,\ \tau_a=2$. A saddle node bifurcation occurs at $\alpha = g_a + 2 = 12$ in the origin and Hopf bifurcations at the two off-origin equilibria for $\alpha=13.11590$.}
 \end{figure}
 
 
@@ -129,7 +128,7 @@ In particular, by numerically analising the stability of the Jacbobian matrix at
             \centering 
             \includegraphics[width=\textwidth]{text/analysis/fig/2by2adapt/streamline_fixed_zoom.png}
         \end{subfigure}
-        \caption{Phase portrait of system in \eqref{eq:diff_dynamics} for $k=13.15,\ g_a=10,\ \tau_a=2$. The nullclines are shown in dark red; the streamline plot is shown in black; the outer stable limit cycle is shown in orange; the inner unstable limit cycles (obtained by backward integration in time) are shown in blue. The two pictures show respectively the overall phase portrait (upper) and a zoom on the unstable limit cycle (lower).} 
+        \caption{Phase portrait of system in \eqref{eq:diff_dynamics} for $\alpha=13.15,\ g_a=10,\ \tau_a=2$. The nullclines are shown in dark red; the streamline plot is shown in black; the outer stable limit cycle is shown in orange; the inner unstable limit cycles (obtained by backward integration in time) are shown in blue. The two pictures show respectively the overall phase portrait (upper) and a zoom on the unstable limit cycle (lower).} 
         \label{fig:adapt_zoom_tri_limt}
     \end{figure*}
 \fi
@@ -137,26 +136,26 @@ In particular, by numerically analising the stability of the Jacbobian matrix at
 
 \begin{figure}[!h]
         \center{\includegraphics[width=\textwidth]{text/analysis/fig/2by2adapt/streamline_homoclinic.png}}
-        \caption{\label{fig:eq2D_cycle_homoclinic} Phase portrait of system in \eqref{eq:diff_dynamics} for $k=13.2422,\ g_a=10,\ \tau_a=2$. The nullclines are shown in dark red; the streamline plot is shown in black; the outer stable limit cycle is shown in orange; the inner unstable limit cycles (obtained by backward integration in time) are shown in blue.}
+        \caption{\label{fig:eq2D_cycle_homoclinic} Phase portrait of system in \eqref{eq:diff_dynamics} for $\alpha=13.2422,\ g_a=10,\ \tau_a=2$. The nullclines are shown in dark red; the streamline plot is shown in black; the outer stable limit cycle is shown in orange; the inner unstable limit cycles (obtained by backward integration in time) are shown in blue.}
 \end{figure}
 
 \begin{figure}[!h]
         \center{\includegraphics[width=\textwidth]{text/analysis/fig/2by2adapt/streamline_before_collapse.png}}
-        \caption{\label{fig:eq2D_cycle_before_collapse} Phase portrait of system in \eqref{eq:diff_dynamics} for $k=13.24605,\ g_a=10,\ \tau_a=2$. The nullclines are shown in dark red; the streamline plot is shown in black; the outer stable limit cycle is shown in orange; the inner unstable limit cycle (obtained by backward integration in time) is shown in blue.}
+        \caption{\label{fig:eq2D_cycle_before_collapse} Phase portrait of system in \eqref{eq:diff_dynamics} for $\alpha=13.24605,\ g_a=10,\ \tau_a=2$. The nullclines are shown in dark red; the streamline plot is shown in black; the outer stable limit cycle is shown in orange; the inner unstable limit cycle (obtained by backward integration in time) is shown in blue.}
 \end{figure}
 
 
 \begin{figure}[!h]
         \center{\includegraphics[width=\textwidth]{text/analysis/fig/2by2adapt/streamline_after_collapse.png}}
-        \caption{\label{fig:eq2D_cycle_after_collapse} Phase portrait of system in \eqref{eq:diff_dynamics} for $k=13.5,\ g_a=10,\ \tau_a=2$. The nullclines are shown in dark red; the streamline plot is shown in black; several trajectories of the system with different initial conditions are shown in orange. }
+        \caption{\label{fig:eq2D_cycle_after_collapse} Phase portrait of system in \eqref{eq:diff_dynamics} for $\alpha=13.5,\ g_a=10,\ \tau_a=2$. The nullclines are shown in dark red; the streamline plot is shown in black; several trajectories of the system with different initial conditions are shown in orange. }
 \end{figure}
 
 \paragraph{Bifurcation results discussion}
-Even for a simple 4-dimensional oscillator, the dynamics of the system is quite rich and it qualitatively varies according to the variation of the parameter $k$. In order to verify the bifurcation analysis performed on the \cref{eq:diff_dynamics} we simulate the original system in \cref{eq:complete_dynamics}.
-We chose as an explanatory example the system with $\tau=2, g_a=10$. The system's behaviour above can be resumed as follows:
+Even for a simple 4-dimensional oscillator, the dynamics of the system is quite rich and it qualitatively varies according to the variation of the parameter $\alpha$. In order to verify the bifurcation analysis performed on the \cref{eq:diff_dynamics} we simulate the original system in \cref{eq:complete_dynamics}.
+We chose as an explanatory example the system with $\tau=2,\ g_a=10$. The system's behaviour above can be resumed as follows:
 \begin{itemize}
-    \item One globally stable equilibrium point with $k<2(1+\frac{1}{\tau_a})=3$ (\cref{fig:eq2D_focus})
-    \item One globally stable limit cycle with $2(1+\frac{1}{\tau_a}) < k \lessapprox 13.11$ (\cref{fig:eq2D_cycle})
-    \item One stable limit cycle and two stable equilibria with $13.11 \lessapprox k \lessapprox 13.24605$ (\cref{fig:adapt_zoom_tri_limt}). 
-    \item Two stable equilibria with $k \gtrapprox 13.24605$ (\cref{fig:eq2D_cycle_after_collapse})
+    \item One globally stable equilibrium point with $\alpha<2(1+\frac{1}{\tau_a})=3$ (\cref{fig:eq2D_focus})
+    \item One globally stable limit cycle with $2(1+\frac{1}{\tau_a}) < \alpha <\alpha^{oo}$, $ g_a + 2 < \alpha^{oo} \approx 13.11$. (\cref{fig:eq2D_cycle}). 
+    \item One stable limit cycle and two stable equilibria with $13.11 \lessapprox \alpha \lessapprox 13.24605$ (\cref{fig:adapt_zoom_tri_limt}). 
+    \item Two stable equilibria with $\alpha \gtrapprox 13.24605$ (\cref{fig:eq2D_cycle_after_collapse})
 \end{itemize}
